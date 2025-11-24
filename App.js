@@ -1,5 +1,4 @@
-import { Button, StyleSheet, View } from "react-native";
-import { TextInput } from "react-native-web";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
   return (
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
     padding: 50,
   },
   inputContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
