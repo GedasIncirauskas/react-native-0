@@ -1,9 +1,17 @@
-import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { useId, useState } from "react";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
+  const uniqueId = useId();
 
   const goalInputHandler = (value) => {
     setEnteredGoalText(value);
@@ -21,24 +29,31 @@ export default function App() {
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="My goal is...."
+          placeholder="My goal is..."
           style={styles.textInput}
           onChangeText={goalInputHandler}
           value={enteredGoalText}
         />
-        <Button title="Add goal" onPress={addNewGoalHandler} />
+        <Button
+          title="Add Goal"
+          onPress={addNewGoalHandler}
+          disabled={enteredGoalText.trim().length === 0}
+        />
       </View>
       <View style={styles.goalContainer}>
-        {!courseGoals.length && (
-          <View style={styles.listGoals}>
-            <Text style={styles.goalText}>My goal list...</Text>
-          </View>
-        )}
-        {courseGoals.map((goal) => (
-          <View key={goal} style={styles.listGoals}>
-            <Text style={styles.goalText}>{goal}</Text>
-          </View>
-        ))}
+        <ScrollView>
+          {courseGoals.length === 0 ? (
+            <View style={styles.listGoals}>
+              <Text style={styles.goalText}>No goals added yet!</Text>
+            </View>
+          ) : (
+            courseGoals.map((goal, index) => (
+              <View key={index} style={styles.listGoals}>
+                <Text style={styles.goalText}>{goal}</Text>
+              </View>
+            ))
+          )}
+        </ScrollView>
       </View>
     </View>
   );
