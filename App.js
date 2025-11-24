@@ -1,7 +1,7 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import {
   Button,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -11,7 +11,6 @@ import {
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
-  const uniqueId = useId();
 
   const goalInputHandler = (value) => {
     setEnteredGoalText(value);
@@ -41,19 +40,17 @@ export default function App() {
         />
       </View>
       <View style={styles.goalContainer}>
-        <ScrollView>
-          {courseGoals.length === 0 ? (
-            <View style={styles.listGoals}>
-              <Text style={styles.goalText}>No goals added yet!</Text>
-            </View>
-          ) : (
-            courseGoals.map((goal, index) => (
-              <View key={index} style={styles.listGoals}>
-                <Text style={styles.goalText}>{goal}</Text>
+        <FlatList
+          data={courseGoals}
+          keyExtractor={(item, index) => index.toString() + item}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.listGoals}>
+                <Text style={styles.goalText}>{itemData.item}</Text>
               </View>
-            ))
-          )}
-        </ScrollView>
+            );
+          }}
+        />
       </View>
     </View>
   );
