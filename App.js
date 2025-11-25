@@ -29,6 +29,11 @@ export default function App() {
     setModalIsVisible(false);
   };
 
+  const deleteGoalHandler = (id) => {
+    const filterGoal = courseGoals.filter((goal) => goal !== id);
+    setCourseGoals(filterGoal);
+  };
+
   return (
     <View style={styles.appContainer}>
       <View>
@@ -36,7 +41,7 @@ export default function App() {
       </View>
       <Button
         title="Add New Goal"
-        color="#5e0acc"
+        color="green"
         onPress={startAddGoalHandler}
       />
       <GoalInput
@@ -48,11 +53,18 @@ export default function App() {
       />
 
       <View style={styles.goalContainer}>
+        {courseGoals.length === 0 && (
+          <Text style={styles.noGoalsText}>
+            No goals added yet. Start adding some!
+          </Text>
+        )}
         <FlatList
           data={courseGoals}
           keyExtractor={(item, index) => index.toString() + item}
           renderItem={(itemData) => {
-            return <GoalItem text={itemData.item} />;
+            return (
+              <GoalItem text={itemData.item} onDeleteItem={deleteGoalHandler} />
+            );
           }}
         />
       </View>
@@ -65,6 +77,7 @@ const styles = StyleSheet.create({
     padding: 50,
     paddingHorizontal: 16,
     flex: 1,
+    backgroundColor: "#311b6b",
   },
   inputContainer: {
     flex: 1,
@@ -83,5 +96,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
     textAlign: "center",
+    color: "white",
+  },
+  noGoalsText: {
+    color: "white",
+    textAlign: "center",
+    marginTop: 12,
   },
 });
