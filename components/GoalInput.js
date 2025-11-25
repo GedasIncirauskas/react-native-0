@@ -18,7 +18,12 @@ const GoalInput = ({
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="Add Goal" onPress={onAddGoal} color="#5e0acc" />
+            <Button
+              title="Add Goal"
+              onPress={onAddGoal}
+              color="#5e0acc"
+              disabled={enteredGoalText.length === 0}
+            />
           </View>
           <View style={styles.button}>
             <Button title="Cancel" onPress={onCancel} color="#f31282" />
