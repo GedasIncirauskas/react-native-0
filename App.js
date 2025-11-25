@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import GoalInput from "./components/GoalInput";
@@ -35,40 +36,46 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-      <View>
-        <Text style={styles.goalTitle}>Course Goals App</Text>
-      </View>
-      <Button
-        title="Add New Goal"
-        color="green"
-        onPress={startAddGoalHandler}
-      />
-      <GoalInput
-        onGoalInput={goalInputHandler}
-        onAddGoal={addNewGoalHandler}
-        enteredGoalText={enteredGoalText}
-        onCancel={endAddGoalHandler}
-        visible={modalIsVisible}
-      />
-
-      <View style={styles.goalContainer}>
-        {courseGoals.length === 0 && (
-          <Text style={styles.noGoalsText}>
-            No goals added yet. Start adding some!
-          </Text>
-        )}
-        <FlatList
-          data={courseGoals}
-          keyExtractor={(item, index) => index.toString() + item}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem text={itemData.item} onDeleteItem={deleteGoalHandler} />
-            );
-          }}
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <View>
+          <Text style={styles.goalTitle}>Course Goals App</Text>
+        </View>
+        <Button
+          title="Add New Goal"
+          color="green"
+          onPress={startAddGoalHandler}
         />
+        <GoalInput
+          onGoalInput={goalInputHandler}
+          onAddGoal={addNewGoalHandler}
+          enteredGoalText={enteredGoalText}
+          onCancel={endAddGoalHandler}
+          visible={modalIsVisible}
+        />
+
+        <View style={styles.goalContainer}>
+          {courseGoals.length === 0 && (
+            <Text style={styles.noGoalsText}>
+              No goals added yet. Start adding some!
+            </Text>
+          )}
+          <FlatList
+            data={courseGoals}
+            keyExtractor={(item, index) => index.toString() + item}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  text={itemData.item}
+                  onDeleteItem={deleteGoalHandler}
+                />
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
